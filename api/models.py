@@ -1,8 +1,5 @@
 from django.db import models
-
-from django.urls import reverse
 from django.utils import timezone
-from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class Berita(models.Model):
@@ -20,6 +17,7 @@ class Berita(models.Model):
 class Produk(models.Model):
     nama_produk = models.CharField(max_length=100)
     harga = models.IntegerField()
+    jumlah_pertemuan = models.IntegerField()
 
     def __str__(self):
         return self.nama_produk
@@ -28,148 +26,79 @@ class Produk(models.Model):
         ordering = ['nama_produk']
 
 
-# COACH ##################################################################
+# PELATIH ##################################################################
+
 
 class Pelatih(models.Model):
     PILIHAN_JENIS_KELAMIN = models.TextChoices(
         'Jenis Kelamin',
-        'Laki-laki Perempuan',
-    )
+        'Laki-laki Perempuan',)
 
     user = models.OneToOneField(
-        User,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-    )
-    nama_lengkap = models.CharField(max_length=50,)
-    nama_panggilan = models.CharField(max_length=10,)
+            User,
+            on_delete=models.SET_NULL,
+            null=True,
+            blank=True,)
+    nama_lengkap = models.CharField(max_length=100,)
+    nama_panggilan = models.CharField(max_length=50,)
     jenis_kelamin = models.CharField(
         max_length=10,
-        choices=PILIHAN_JENIS_KELAMIN.choices,
-    )
-    tempat_lahir = models.CharField(
-        max_length=10,
-        )
-    tanggal_lahir = models.DateField(
-        help_text='format "tahun-bulan-tanggal" (Contoh "2000-01-31")',
-    )
-
-    nomor_ktp = models.CharField(
-        max_length=20,
-        blank=True,
-        )
-    alamat_tinggal = models.CharField(
-        max_length=100,
-        blank=True,
-        )
-    alamat_kotakab = models.CharField(
-        'Alamat Kota/ Kab.', 
-        max_length=20,
-        blank=True,
-        )
-    nomor_ponsel = models.CharField(
-        max_length=20,
-        blank=True,
-        )
-    nama_bank = models.CharField(
-        max_length=20,
-        help_text='Diutamakan Bank Mandiri',
-        blank=True,
-    )
-    nomor_rekening = models.CharField(
-        max_length=30, 
-        blank=True,
-        )
-    deskripsi = models.TextField(
-        max_length=100,
-        help_text='latar belakang, pendidikan, keahlian',
-        blank=True,
-    )
-
+        choices=PILIHAN_JENIS_KELAMIN.choices,)
+    bagi_hasil = models.FloatField(default=0.6)
+   
     class Meta:
-        ordering = ['nama_panggilan']
+        ordering = ['-nama_panggilan']
 
     def __str__(self):
         return f'Coach {self.nama_panggilan}'
 
-    def usia(self):
-        return int((timezone.now().date() - self.tanggal_lahir).days / 365.25)
 
-# STUDENT ##################################################################
+# SISWA ##################################################################
 
-class Student(models.Model):
+
+class Siswa(models.Model):
     PILIHAN_JENIS_KELAMIN = models.TextChoices(
         'Jenis Kelamin',
         'Laki-laki Perempuan',
     )
 
-    nama_lengkap = models.CharField(max_length=50,)
-    nama_panggilan = models.CharField(max_length=10,)
+    nama_lengkap = models.CharField(max_length=100,)
+    nama_panggilan = models.CharField(max_length=50,)
     jenis_kelamin = models.CharField(
         max_length=10,
         choices=PILIHAN_JENIS_KELAMIN.choices,
     )
-    tempat_lahir = models.CharField(max_length=10,)
-    tanggal_lahir = models.DateField(
-        help_text='format "tahun-bulan-tanggal" (Contoh "2000-01-31")',
-    )
-
-    alamat_tinggal = models.CharField(max_length=100, blank=True,)
-    alamat_kotakab = models.CharField('Alamat Kota/ Kab.', max_length=20, blank=True,)
-    nomor_ponsel = models.CharField(max_length=20, blank=True,)
-    deskripsi = models.TextField(
-        max_length=100,
-        help_text='harapan latihan, penyakit, kebiasaan, dll',
-        blank=True,
-    )
-
-    # KHUSUS STUDENT
-
-    PILIHAN_AFILIASI = models.TextChoices(
-        'Afiliasi',
-        'Dnurs',
-    )
-
-    afiliasi = models.CharField(
-        max_length=10,
-        choices=PILIHAN_AFILIASI.choices,
-        blank=True,
-        null=True
-    )
-
+    usia = models.IntegerField()
+   
     class Meta:
         ordering = ['-nama_lengkap']
-
-    def get_absolute_url(self):
-        return reverse('student-app:student-detail', kwargs={'pk': self.pk})
 
     def __str__(self):
         return f'{self.nama_lengkap} ({self.nama_panggilan})'
 
-    def usia(self):
-        return int((timezone.now().date() - self.tanggal_lahir).days / 365.25)
+
+# PESANAN ##################################################################
 
 
 class Pesanan(models.Model):
-    # siswa = models.ForeignKey(Student,on_delete=models.SET_NULL,null=True)
-    # pelatih = models.ForeignKey(Coach, on_delete=models.SET_NULL, null=True)
+    siswa = models.ForeignKey(Siswa,on_delete=models.SET_NULL,null=True)
+    pelatih = models.ForeignKey(Pelatih, on_delete=models.SET_NULL, null=True)
     produk = models.ForeignKey(Produk, on_delete=models.SET_NULL, null=True)
-    diskon = models.FloatField(blank=True, null=True)
+    diskon = models.FloatField(required=False)
 
     tgl_transaksi = models.DateField()
     tgl_habis = models.DateField()
 
     arsip = models.BooleanField(default=False)
 
-    p1 = models.DateField('Pertemuan 1', null=True, blank=True)
-    p2 = models.DateField('Pertemuan 2', null=True, blank=True)
-    p3 = models.DateField('Pertemuan 3', null=True, blank=True)
-    p4 = models.DateField('Pertemuan 4', null=True, blank=True)
-    p5 = models.DateField('Pertemuan 5', null=True, blank=True)
-    p6 = models.DateField('Pertemuan 6', null=True, blank=True)
-    p7 = models.DateField('Pertemuan 7', null=True, blank=True)
-    p8 = models.DateField('Pertemuan 8', null=True, blank=True)
+    p1 = models.DateField('Pertemuan 1', required=False)
+    p2 = models.DateField('Pertemuan 2', required=False)
+    p3 = models.DateField('Pertemuan 3', required=False)
+    p4 = models.DateField('Pertemuan 4', required=False)
+    p5 = models.DateField('Pertemuan 5', required=False)
+    p6 = models.DateField('Pertemuan 6', required=False)
+    p7 = models.DateField('Pertemuan 7', required=False)
+    p8 = models.DateField('Pertemuan 8', required=False)
 
     p1_c = models.BooleanField(default=False)
     p2_c = models.BooleanField(default=False)
@@ -182,26 +111,23 @@ class Pesanan(models.Model):
 
 
     class Meta:
-        ordering = ['student']
+        ordering = ['siswa']
 
     def __str__(self):
         try:
-            return f'{self.id}/{self.student.nama_panggilan}'
+            return f'{self.id}/{self.siswa.nama_panggilan}'
         except:
             return f'{self.id}/deleted_account'
 
-    def is_expired(self):
-        if self.tanggal_expired < timezone.now().date():
-            return "✘EXPIRED"
-        else:
-            return ""
+    def status_habis(self):
+        return self.tgl_habis < timezone.now().date()
 
-    def bill(self):
+    def nilai_transaksi(self):
         x = 0
         if self.diskon:
-            x = (1 - self.diskon) * self.product.harga
+            x = (1 - self.diskon) * self.produk.harga
             return int(x)
-        return int(self.product.harga)
+        return self.produk.harga
 
     def p_total(self):
         count = 0
@@ -244,28 +170,10 @@ class Pesanan(models.Model):
         return count
 
     def margin_p_c(self):
-        x = int(self.p_total())
-        y = int(self.p_c_total())
-        if x != y:
-            return x-y
-        else:
-            return ''
+        return self.p_total() - self.p_c_total()
 
-    def income_coach_normal(self):
-        return int(self.p_c_total() * self.product.fee_pelatih)
+    def honor_per_sesi(self):
+        return int(self.nilai_transaksi() / self.produk.jumlah_pertemuan)
 
-    def potential_income_coach_normal(self):
-        return int(
-            (self.product.jumlah_pertemuan - self.p_c_total())
-            * self.product.fee_pelatih
-            )
-
-    def p_status(self):
-        if self.p_total() >= self.product.jumlah_pertemuan:
-            return "✘SELESAI"
-        else:
-            return ""
-
-    def income_coach_actual_normal(self):
-        return self.margin_p_c() * self.product.fee_pelatih
-
+    def honor_pencairan(self):
+        return int(self.honor_per_sesi() * self.margin_p_c())
