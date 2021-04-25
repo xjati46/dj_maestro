@@ -13,6 +13,7 @@ class Berita(models.Model):
 
     class Meta:
         ordering = ['-waktu_pos']
+        verbose_name_plural = "Berita"
 
 
 class Produk(models.Model):
@@ -25,6 +26,7 @@ class Produk(models.Model):
 
     class Meta:
         ordering = ['nama_produk']
+        verbose_name_plural = "Produk"
 
 
 # PELATIH ##################################################################
@@ -49,6 +51,7 @@ class Pelatih(models.Model):
    
     class Meta:
         ordering = ['-nama_panggilan']
+        verbose_name_plural = "Pelatih"
 
     def __str__(self):
         return f'Coach {self.nama_panggilan}'
@@ -73,6 +76,7 @@ class Siswa(models.Model):
    
     class Meta:
         ordering = ['-nama_lengkap']
+        verbose_name_plural = "Siswa"
 
     def __str__(self):
         return f'{self.nama_lengkap} ({self.nama_panggilan})'
@@ -113,6 +117,7 @@ class Pesanan(models.Model):
 
     class Meta:
         ordering = ['siswa']
+        verbose_name_plural = "Pesanan"
 
     def __str__(self):
         try:

@@ -28,6 +28,9 @@ class PesananAdmin(admin.ModelAdmin):
             'fields': ('siswa', 'pelatih', 'produk', 'diskon', 'tgl_transaksi', 'tgl_habis')
         }),
         ('Data Latihan', {
-            'fields': ('arsip', 'p1', 'p1_c', 'p2', 'p2_c', 'p3', 'p3_c', 'p4', 'p4_c', 'p5', 'p5_c', 'p6', 'p6_c', 'p7', 'p7_c', 'p8', 'p8_c')
+            'fields': (('p1', 'p1_c'), ('p2', 'p2_c'), ('p3', 'p3_c'), ('p4', 'p4_c'), ('p5', 'p5_c'), ('p6', 'p6_c'), ('p7', 'p7_c'), ('p8', 'p8_c'))
+        }),
+        ('Status Latihan', {
+            'fields': ('arsip',)
         }),
     )
