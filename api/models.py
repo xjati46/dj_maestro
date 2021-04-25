@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 from django.utils import timezone
 
 
@@ -84,21 +85,21 @@ class Pesanan(models.Model):
     siswa = models.ForeignKey(Siswa,on_delete=models.SET_NULL,null=True)
     pelatih = models.ForeignKey(Pelatih, on_delete=models.SET_NULL, null=True)
     produk = models.ForeignKey(Produk, on_delete=models.SET_NULL, null=True)
-    diskon = models.FloatField(required=False)
+    diskon = models.FloatField(null=True, blank=True)
 
     tgl_transaksi = models.DateField()
     tgl_habis = models.DateField()
 
     arsip = models.BooleanField(default=False)
 
-    p1 = models.DateField('Pertemuan 1', required=False)
-    p2 = models.DateField('Pertemuan 2', required=False)
-    p3 = models.DateField('Pertemuan 3', required=False)
-    p4 = models.DateField('Pertemuan 4', required=False)
-    p5 = models.DateField('Pertemuan 5', required=False)
-    p6 = models.DateField('Pertemuan 6', required=False)
-    p7 = models.DateField('Pertemuan 7', required=False)
-    p8 = models.DateField('Pertemuan 8', required=False)
+    p1 = models.DateField('Pertemuan 1', null=True, blank=True)
+    p2 = models.DateField('Pertemuan 2', null=True, blank=True)
+    p3 = models.DateField('Pertemuan 3', null=True, blank=True)
+    p4 = models.DateField('Pertemuan 4', null=True, blank=True)
+    p5 = models.DateField('Pertemuan 5', null=True, blank=True)
+    p6 = models.DateField('Pertemuan 6', null=True, blank=True)
+    p7 = models.DateField('Pertemuan 7', null=True, blank=True)
+    p8 = models.DateField('Pertemuan 8', null=True, blank=True)
 
     p1_c = models.BooleanField(default=False)
     p2_c = models.BooleanField(default=False)
