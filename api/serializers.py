@@ -16,6 +16,8 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 class BeritaSerializer(serializers.ModelSerializer):
+    waktu_pos = serializers.DateTimeField(format="%d %B %Y %H:%M")
+
     class Meta:
         model = Berita
         fields = ('id', 'waktu_pos', 'judul', 'konten')
