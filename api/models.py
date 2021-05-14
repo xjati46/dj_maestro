@@ -50,7 +50,7 @@ class Pelatih(models.Model):
     bagi_hasil = models.FloatField(default=0.6)
    
     class Meta:
-        ordering = ['-nama_panggilan']
+        ordering = ['nama_lengkap']
         verbose_name_plural = "Pelatih"
 
     def __str__(self):
@@ -75,7 +75,7 @@ class Siswa(models.Model):
     usia = models.IntegerField()
    
     class Meta:
-        ordering = ['-nama_lengkap']
+        ordering = ['nama_lengkap']
         verbose_name_plural = "Siswa"
 
     def __str__(self):
@@ -86,9 +86,9 @@ class Siswa(models.Model):
 
 
 class Pesanan(models.Model):
-    siswa = models.ForeignKey(Siswa,on_delete=models.SET_NULL,null=True)
-    pelatih = models.ForeignKey(Pelatih, on_delete=models.SET_NULL, null=True)
-    produk = models.ForeignKey(Produk, on_delete=models.SET_NULL, null=True)
+    siswa = models.ForeignKey(Siswa, on_delete=models.SET_NULL, null=True, blank=True)
+    pelatih = models.ForeignKey(Pelatih, on_delete=models.SET_NULL, null=True, blank=True)
+    produk = models.ForeignKey(Produk, on_delete=models.SET_NULL, null=True, blank=True)
     diskon = models.FloatField(null=True, blank=True)
 
     tgl_transaksi = models.DateField()
