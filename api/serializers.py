@@ -28,12 +28,13 @@ class ProdukSerializer(serializers.ModelSerializer):
         fields = ('id', 'nama_produk', 'harga', 'jumlah_pertemuan')
 
 class PelatihSerializer(serializers.ModelSerializer):
-    # user_name = serializers.CharField(source='user.username')
+    user_name = serializers.CharField(source='user.username', read_only=True)
 
     class Meta:
         model = Pelatih
         # fields = ('id', 'user_name', 'nama_lengkap', 'nama_panggilan', 'jenis_kelamin', 'bagi_hasil')
-        fields = ('id', 'user', 'nama_lengkap', 'nama_panggilan', 'jenis_kelamin', 'bagi_hasil')
+        fields = ('id', 'user', 'user_name', 'nama_lengkap', 'nama_panggilan', 'jenis_kelamin', 'bagi_hasil')
+        # extra_kwargs = {'user_name': {'read_only': True, 'required': False, allow_null=True}}
 
 class SiswaSerializer(serializers.ModelSerializer):
     class Meta:
@@ -41,7 +42,7 @@ class SiswaSerializer(serializers.ModelSerializer):
         fields = ('id', 'nama_lengkap', 'nama_panggilan', 'jenis_kelamin', 'usia')
 
 class PesananSerializer(serializers.ModelSerializer):
-    nama_pelatih = serializers.CharField(source='pelatih.nama_lengkap')
+    nama_pelatih = serializers.CharField(source='pelatih.nama_lengkap', allow_null=True)
     nama_produk = serializers.CharField(source='produk.nama_produk')
     nama_siswa = serializers.CharField(source='siswa.nama_lengkap', allow_null=True)
     # nama_siswa = (
