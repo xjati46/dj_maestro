@@ -179,9 +179,12 @@ class Pesanan(models.Model):
         return self.p_total() - self.p_c_total()
 
     def honor_per_sesi(self):
-        x = self.nilai_transaksi() * self.pelatih.bagi_hasil
-        y = x / self.produk.jumlah_pertemuan
-        return int(y)
+        try:
+            x = self.nilai_transaksi() * self.pelatih.bagi_hasil
+            y = x / self.produk.jumlah_pertemuan
+            return int(y)
+        except:
+            return 0
 
     def honor_pencairan(self):
         return int(self.honor_per_sesi() * self.margin_p_c())
