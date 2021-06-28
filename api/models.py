@@ -116,7 +116,7 @@ class Pesanan(models.Model):
 
 
     class Meta:
-        ordering = ['siswa']
+        ordering = ['-id']
         verbose_name_plural = "Pesanan"
 
     def __str__(self):

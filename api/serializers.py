@@ -42,10 +42,10 @@ class SiswaSerializer(serializers.ModelSerializer):
         fields = ('id', 'nama_lengkap', 'nama_panggilan', 'jenis_kelamin', 'usia')
 
 class PesananSerializer(serializers.ModelSerializer):
-    nama_pelatih = serializers.CharField(source='pelatih.nama_lengkap', allow_null=True)
-    nama_produk = serializers.CharField(source='produk.nama_produk')
-    produk_pert = serializers.IntegerField(source='produk.jumlah_pertemuan')
-    nama_siswa = serializers.CharField(source='siswa.nama_lengkap', allow_null=True)
+    nama_pelatih = serializers.CharField(source='pelatih.nama_panggilan', allow_null=True, read_only=True)
+    nama_produk = serializers.CharField(source='produk.nama_produk', read_only=True)
+    produk_pert = serializers.IntegerField(source='produk.jumlah_pertemuan', read_only=True)
+    nama_siswa = serializers.CharField(source='siswa.nama_lengkap', allow_null=True, read_only=True)
     # nama_siswa = (
     #     try:
     #         serializers.CharField(source='siswa.nama_lengkap')
@@ -64,4 +64,4 @@ class PesananSerializer(serializers.ModelSerializer):
     class Meta:
         model = Pesanan
         # fields = ('id', '__str__', 'nama_pelatih', 'arsip', 'nama_siswa', 'nama_produk', 'diskon', 'tgl_transaksi', 'tgl_habis', 'p1', 'p1_c', 'p2', 'p2_c', 'p3', 'p3_c', 'p4', 'p4_c', 'p5', 'p5_c', 'p6', 'p6_c', 'p7', 'p7_c', 'p8', 'p8_c', 'status_habis', 'nilai_transaksi', 'p_total', 'p_c_total', 'margin_p_c', 'honor_per_sesi', 'honor_pencairan')
-        fields = ('id', '__str__', 'nama_pelatih', 'arsip', 'nama_siswa', 'nama_produk', 'produk_pert', 'diskon', 'tgl_transaksi', 'tgl_habis', 'p1', 'p1_c', 'p2', 'p2_c', 'p3', 'p3_c', 'p4', 'p4_c', 'p5', 'p5_c', 'p6', 'p6_c', 'p7', 'p7_c', 'p8', 'p8_c', 'status_habis', 'nilai_transaksi', 'p_total', 'p_c_total', 'margin_p_c', 'honor_per_sesi', 'honor_pencairan')
+        fields = ('id', '__str__', 'siswa', 'pelatih', 'produk', 'nama_pelatih', 'arsip', 'nama_siswa', 'nama_produk', 'produk_pert', 'diskon', 'tgl_transaksi', 'tgl_habis', 'p1', 'p1_c', 'p2', 'p2_c', 'p3', 'p3_c', 'p4', 'p4_c', 'p5', 'p5_c', 'p6', 'p6_c', 'p7', 'p7_c', 'p8', 'p8_c', 'status_habis', 'nilai_transaksi', 'p_total', 'p_c_total', 'margin_p_c', 'honor_per_sesi', 'honor_pencairan')
