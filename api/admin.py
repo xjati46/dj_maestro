@@ -12,7 +12,7 @@ class ProdukAdmin(admin.ModelAdmin):
 
 @admin.register(Pelatih)
 class PelatihAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('__str__', 'id')
 
 @admin.register(Siswa)
 class SiswaAdmin(admin.ModelAdmin):
