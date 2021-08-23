@@ -30,9 +30,10 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '6=31w7_mv76^3s$_2)8%b1klx+-b#y
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 ALLOWED_HOSTS = [
+    "dj-maestro.herokuapp.com",
     "127.0.0.1",
-    "192.168.8.102",
-    "192.168.43.90"
+    # "192.168.8.102",
+    # "192.168.43.90",
 ]
 
 
