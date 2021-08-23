@@ -28,6 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "127.0.0.1",
     "192.168.8.102",
+    "192.168.43.90"
 ]
 
 
@@ -129,6 +130,7 @@ STATIC_URL = '/static/'
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://192.168.8.102:8000",
+    "http://192.168.43.90:8000"
 ]
 
 REST_FRAMEWORK = {
