@@ -134,9 +134,11 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATIC_URL = '/static/'
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://192.168.8.102:8000",
-    "http://192.168.43.90:8000"
+    # "http://localhost:3000",
+    # "http://192.168.8.102:8000",
+    # "http://192.168.43.90:8000",
+    "https://maestro-admin-606c4.firebaseapp.com",
+    "https://maestro-admin-606c4.web.app"
 ]
 
 REST_FRAMEWORK = {
