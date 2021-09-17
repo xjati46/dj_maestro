@@ -66,6 +66,11 @@ class Siswa(models.Model):
         'Laki-laki Perempuan',
     )
 
+    user = models.OneToOneField(
+            User,
+            on_delete=models.SET_NULL,
+            null=True,
+            blank=True,)
     nama_lengkap = models.CharField(max_length=100,)
     nama_panggilan = models.CharField(max_length=50,)
     jenis_kelamin = models.CharField(

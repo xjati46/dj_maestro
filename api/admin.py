@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import *
+from import_export.admin import ImportExportModelAdmin
 
 
 @admin.register(Berita)
@@ -7,20 +8,20 @@ class BeritaAdmin(admin.ModelAdmin):
     pass
 
 @admin.register(Produk)
-class ProdukAdmin(admin.ModelAdmin):
+class ProdukAdmin(ImportExportModelAdmin):
     list_display = ('__str__', 'harga')
 
 @admin.register(Pelatih)
-class PelatihAdmin(admin.ModelAdmin):
+class PelatihAdmin(ImportExportModelAdmin):
     list_display = ('__str__', 'id')
 
 @admin.register(Siswa)
-class SiswaAdmin(admin.ModelAdmin):
+class SiswaAdmin(ImportExportModelAdmin):
     pass
 
 
 @admin.register(Pesanan)
-class PesananAdmin(admin.ModelAdmin):
+class PesananAdmin(ImportExportModelAdmin):
     list_display = ('__str__', 'produk', 'pelatih', 'arsip')
     list_filter = ('arsip', 'pelatih', 'produk')
     fieldsets = (
