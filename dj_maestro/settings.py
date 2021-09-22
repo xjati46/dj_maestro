@@ -31,7 +31,7 @@ DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 ALLOWED_HOSTS = [
     "dj-maestro.herokuapp.com",
-    "127.0.0.1",
+    # "127.0.0.1",
     # "192.168.8.102",
     # "192.168.43.90",
 ]
@@ -139,7 +139,9 @@ CORS_ALLOWED_ORIGINS = [
     # "http://192.168.8.102:8000",
     # "http://192.168.43.90:8000",
     "https://maestro-admin-606c4.firebaseapp.com",
-    "https://maestro-admin-606c4.web.app"
+    "https://maestro-admin-606c4.web.app",
+    "https://maestro-coach.web.app",
+    "https://maestro-coach.firebaseapp.com"
 ]
 
 REST_FRAMEWORK = {
